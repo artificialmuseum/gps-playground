@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="demo"></div>
+
+    <script>
+      const demoDiv = document.getElementById("demo")
+
+      demoDiv.innerHTML = 'preparing...'
+
+      const getLocation = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition, showError)
+        } else {
+          demoDiv.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+
+      const showPosition = (position) => {
+        console.log({position})
+
+        demoDiv.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+      }
+
+
+      const showError = (error) => {
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            demoDiv.innerHTML = "User denied the request for Geolocation."
+            break;
+          case error.POSITION_UNAVAILABLE:
+            demoDiv.innerHTML = "Location information is unavailable."
+            break;
+          case error.TIMEOUT:
+            demoDiv.innerHTML = "The request to get user location timed out."
+            break;
+          case error.UNKNOWN_ERROR:
+            demoDiv.innerHTML = "An unknown error occurred."
+            break;
+        }
+      }
+
+      getLocation()
+    </script>
+  </body>
+</html>
