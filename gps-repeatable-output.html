@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <button id = "find-me">Show my location</button><br/>
+    <p id = "status"></p>
+    <a id = "map-link" target="_blank"></a>
+
+    <script>
+      const geoFindMe = () => {
+        const status = document.querySelector('#status');
+        const mapLink = document.querySelector('#map-link');
+
+        mapLink.href = '';
+        mapLink.textContent = '';
+
+        const success = (position) => {
+          const latitude  = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          status.textContent = '';
+          mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+          mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+        }
+
+        const error = () => {
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+                status.textContent = "User denied the request for Geolocation."
+                break;
+              case error.POSITION_UNAVAILABLE:
+                status.textContent = "Location information is unavailable."
+                break;
+              case error.TIMEOUT:
+                status.textContent = "The request to get user location timed out."
+                break;
+              case error.UNKNOWN_ERROR:
+                status.textContent = "An unknown error occurred."
+                break;
+            }
+        }
+
+        if( !navigator.geolocation ) {
+          status.textContent = 'Geolocation is not supported by your browser';
+        } else {
+          status.textContent = 'Locating...';
+          navigator.geolocation.getCurrentPosition(success, error);
+        }
+      }
+
+      document.querySelector('#find-me').addEventListener('click', geoFindMe)
+    </script>
+  </body>
+</html>
