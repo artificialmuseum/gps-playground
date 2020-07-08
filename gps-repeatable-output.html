@@ -19,6 +19,7 @@
       const success = position => {
         const latitude  = position.coords.latitude;
         const longitude = position.coords.longitude;
+        const accuracy = position.coords.accuracy;
 
         status.textContent = '';
 
@@ -26,10 +27,10 @@
         mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
         mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
 
-        const pos = JSON.stringify({ ...position }, null, 2)
+        const pos = JSON.stringify({ latitude, longitude, accuracy }, null, 2)
         debugDiv.textContent = pos
 
-        savedPositions.push({ pos, time: new Date().getTime() })
+        savedPositions.push({ latitude, longitude, accuracy, time: new Date().getTime() })
       }
 
       const error = () => {
@@ -80,7 +81,7 @@
         // d.innerText = '~ 1 second, got ' + savedPositions.length + ' positions'
         // document.body.appendChild(d)
         const dd = document.querySelector('#positions')
-        dd.innerText = JSON.stringify(savedPositions, null, 2)
+        dd.textContent = JSON.stringify(savedPositions, null, 2)
         document.body.appendChild(dd)
       }, 1000)
     </script>
