@@ -10,6 +10,7 @@
     <a id="map-link" target="_blank"></a>
 
     <div id="debugDiv"></div>
+    <div id="positions"></div>
 
     <script>
       const savedPositions = []
@@ -28,7 +29,7 @@
         const pos = JSON.stringify(position, null, 2)
         debugDiv.textContent = pos
 
-        savedPositions.push({ latitude, longitude, time: new Date().getTime() })
+        savedPositions.push({ position, time: new Date().getTime() })
       }
 
       const error = () => {
@@ -75,7 +76,11 @@
       geoFindMe()
 
       setInterval(() => {
-        console.log('~1 second, got', savedPositions.length, 'positions')
+        // const d = document.createElement('div')
+        // d.innerText = '~ 1 second, got ' + savedPositions.length + ' positions'
+        // document.body.appendChild(d)
+        const dd = document.querySelector('#positions')
+        dd.innerText = JSON.stringify(savedPositions, null, 2)
       }, 1000)
     </script>
   </body>
