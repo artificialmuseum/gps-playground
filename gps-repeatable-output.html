@@ -26,10 +26,10 @@
         mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
         mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
 
-        const pos = JSON.stringify(position, null, 2)
+        const pos = JSON.stringify({ ...position }, null, 2)
         debugDiv.textContent = pos
 
-        savedPositions.push({ position, time: new Date().getTime() })
+        savedPositions.push({ pos, time: new Date().getTime() })
       }
 
       const error = () => {
@@ -81,6 +81,7 @@
         // document.body.appendChild(d)
         const dd = document.querySelector('#positions')
         dd.innerText = JSON.stringify(savedPositions, null, 2)
+        document.body.appendChild(dd)
       }, 1000)
     </script>
   </body>
